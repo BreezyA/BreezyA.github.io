@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>0x01 迟到的第二篇文 [ Breezy_Struggle ]</title><link rel="stylesheet" href="/css/meizj.css"><link rel="stylesheet" href="/css/prettify.css"><link rel="stylesheet" href="/css/tomorrow-night-blue.css"><link rel="stylesheet" href="/css/screen.css"><link rel="stylesheet" href="/css/tag.css"><script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script><script src="https://cdn.bootcss.com/lazysizes/5.1.0/lazysizes.min.js"></script><script>$("img").attr({"class":"lazyload"});
+
+
+
+</script><meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Breezy_Struggle" type="application/atom+xml">
+</head><body><div id="menu-outer"><nav id="menu-inner"><a id="menuLabel" href="/">Home</a><a id="menuLabel" href="/about">About</a><a id="menuLabel" href="/archives">Archives</a><a id="menuLabel">Github</a></nav></div><div id="content-outer"><div id="content-inner"><div id="recent-posts"><a id="blogTitle">Breezy's Blog</a></div><article id="post"><h1 id="postTitle">0x01 迟到的第二篇文</h1><blockquote>
+<p> 睡眠不佳 !!! 还望见谅</p>
+</blockquote>
+<p>第二篇文章记录一点内网渗透时候的Tip(当前遇到)</p>
+<h2 id="0x00-Attention"><a href="#0x00-Attention" class="headerlink" title="0x00 Attention"></a>0x00 Attention</h2><ol>
+<li>Getshell 后针对解释性语言如PHP等可热加载解析的可以适当将shell藏到正常目录下，要修改内容以防Hash匹配，Linux可以使用<code>touch</code>命令修改文件时间<code>touch -r old_date_file your_evil_shell</code>,Windows可以结合<code>Powershell</code>更改文件的创建访问及修改时间。</li>
+</ol>
+<p><code>(ls)[num]|fl *</code><br>形如<code>$(ls)</code>返回当前目录下的文件，数组序号对单文件进行选择，将结果通过管道符给<code>fl</code>命令输出</p>
+<p><img src="/images/0x01/ls.png" alt="ls"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(Get-ChildItem file_name).CreationTime&#x3D;&#39;2020&#x2F;6&#x2F;24 21:23:52&#39;    对指定时间进行修改</span><br><span class="line">为了更方便可以改为</span><br><span class="line">(Get-ChildItem file_name).CreationTime&#x3D;(Get-ChildItem exist_file_name).CreationTime</span><br></pre></td></tr></table></figure></article><div id="paginator"></div><div id="toc"></div></div></div><div id="footer"><div id="bottom-inner"><span>Powerd By </span><span> Breezy </span><span>using    </span><a href="https://github.com/meizjm3i/Meizj" target="_blank" rel="noopener"><span>Meizj</span></a><span>.</span><br></div></div><script src="/js/prettify.js"></script><script src="/js/meizj.js"></script><script>//- $(window).on('load', function(){ 
+$('pre').addClass('prettyprint linenums');
+prettyPrint();
+//- });
+$(".gutter").remove();</script></body></html>
