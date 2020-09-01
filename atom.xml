@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-08-31T01:24:50.338Z</updated>
+  <updated>2020-08-31T14:12:56.104Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>0x03 Runas Tip</title>
+    <link href="http://yoursite.com/2020/08/31/Runas-Tip/"/>
+    <id>http://yoursite.com/2020/08/31/Runas-Tip/</id>
+    <published>2020-08-31T01:39:21.000Z</published>
+    <updated>2020-08-31T14:12:56.104Z</updated>
+    
+    <content type="html"><![CDATA[<p>##</p><blockquote><p>坚持记录</p></blockquote><p><code>Runas</code></p><p>系统内置用户session切换命令</p><ul><li>交互式<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runas &#x2F;user:(user@domain|domain\user) &#x2F;noprofile command(必须为双引号包裹)</span><br></pre></td></tr></table></figure></li></ul><p><img src="/images/0x03/intractive.jpg" alt="interactive"></p><ul><li>非交互式使用Runas执行命令<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">cscript  xxxx.vbs</span><br><span class="line"></span><br><span class="line">dim WshShell,cmd </span><br><span class="line">cmd&#x3D;&quot;%SystemRoot%\system32\cmd.exe&quot; </span><br><span class="line">Set WshShell&#x3D;WScript.CreateObject(&quot;WScript.Shell&quot;) </span><br><span class="line">WshShell.Run cmd</span><br><span class="line">WScript.Sleep 500</span><br><span class="line">WshShell.SendKeys&quot;runas &#x2F;noprofile &#x2F;user:workgroup\administrator &quot;&quot;cmd &#x2F;c netstat -ano &gt; c:\windows\temp\TS_AK74.tmp&quot;&quot;&quot;</span><br><span class="line">WshShell.SendKeys&quot;&#123;ENTER&#125;&quot; </span><br><span class="line">WScript.Sleep 500  </span><br><span class="line">WshShell.SendKeys&quot;123456&quot;</span><br><span class="line">WshShell.SendKeys&quot;&#123;ENTER&#125;&quot; </span><br><span class="line">WScript.Sleep 5000</span><br><span class="line">WshShell.SendKeys&quot;exit&quot;</span><br><span class="line">WshShell.SendKeys&quot;&#123;ENTER&#125;&quot; </span><br><span class="line"></span><br><span class="line">VBS中双引号使用&quot;&quot; 进行转义</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">切换Session后对其特定的net session net use 进行查看 </span><br><span class="line">或者对特定权限用户目录进行访问而不用修改文件夹权限</span><br><span class="line">icacls fle&#x2F;dir</span><br><span class="line">icacls file&#x2F;dir &#x2F;grant user:(OI)(CI)(I) F &#x2F;T</span><br></pre></td></tr></table></figure></li></ul><p><img src="/images/0x03/nonintractive.jpg" alt="/images/0x03"></p><ul><li>蜜罐<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">runas 使用netonly参数在网络认证时才会发送密码进行认证  在本地可以通过输入任意密码启动cmd session作用范围为当前用户</span><br><span class="line">密码会被写入到lsass进程中 </span><br><span class="line">runas &#x2F;netonly &#x2F;user:xxx cmd.exe</span><br><span class="line"></span><br><span class="line">可用来设置蜜罐账户 检测蜜罐密码是否被使用</span><br></pre></td></tr></table></figure></li></ul><p><img src="/images/0x03/netonly.jpg" alt="netonly"><br>通过<code>/netonly</code>参数，只要不经过网络认证就不会对身份进行检测，任意输入密码启动为<code>administrator</code>会话,继续查看当前用户权限依然为本地用户。</p><p>通过<code>Mimikatz</code>抓取密码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">sekurlsa::logonpasswords</span><br></pre></td></tr></table></figure><p><img src="/images/0x03/mimika.jpg" alt="mimikatz"><br>任意输入的密码被抓取成功</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;##&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;坚持记录&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;Runas&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;系统内置用户session切换命令&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;交互式&lt;figure class=&quot;highlight pla
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>0x02 比赛分享</title>
