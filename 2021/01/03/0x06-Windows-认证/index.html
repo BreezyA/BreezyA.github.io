@@ -17,16 +17,25 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>Category: Intranet | Hexo</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Breezy_Struggle">
-<meta property="og:url" content="https://breezya.github.io/categories/Intranet/index.html">
+  <title>0x06 Windows 认证 | Hexo</title>
+  <meta name="description" content="Windows分为本地认证和网络认证  本地认证本地认证由Lsass.exe 提供认证，用户从winlogon.exe进程输入密码，密码提交给lsass.exe用于认证(保留明文，如果打了2871997补丁后默认不保存，需要修改注册表重新登录，并将明文密码通过LM和NTLM生成算法处理后得到用户Hash与SAM数据库中保存密码进行对比)  1%SystemRoot%\system32\conf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="0x06 Windows 认证">
+<meta property="og:url" content="https://breezya.github.io/2021/01/03/0x06-Windows-%E8%AE%A4%E8%AF%81/index.html">
 <meta property="og:site_name" content="Breezy_Struggle">
+<meta property="og:description" content="Windows分为本地认证和网络认证  本地认证本地认证由Lsass.exe 提供认证，用户从winlogon.exe进程输入密码，密码提交给lsass.exe用于认证(保留明文，如果打了2871997补丁后默认不保存，需要修改注册表重新登录，并将明文密码通过LM和NTLM生成算法处理后得到用户Hash与SAM数据库中保存密码进行对比)  1%SystemRoot%\system32\conf">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://breezya.github.io/images/windows_auth/local.png">
+<meta property="og:image" content="https://breezya.github.io/images/windows_auth/challenge.png">
+<meta property="og:image" content="https://breezya.github.io/images/windows_auth/challengewithdc.png">
+<meta property="og:image" content="https://breezya.github.io/images/windows_auth/LmCompatibilityLevel.png">
+<meta property="article:published_time" content="2021-01-03T12:05:00.000Z">
+<meta property="article:modified_time" content="2021-01-03T12:16:12.853Z">
 <meta property="article:author" content="Breezy">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://breezya.github.io/images/windows_auth/local.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://breezya.github.io/categories/Intranet/index.html">
+  <link rel="canonical" href="https://breezya.github.io/2021/01/03/0x06-Windows-%E8%AE%A4%E8%AF%81/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Breezy_Struggle" type="application/atom+xml">
   
@@ -314,75 +323,114 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="content article article-categories article-type-list" itemscope="">
-    <header class="article-header">
-      <h1 itemprop="name" class="hidden-xs">Category: Intranet</h1>
-      <p class="hidden-xs">Total 4 articles</p>
-      <nav role="navigation" id="nav-main" class="okayNav">
-        <ul>
-          <li><a href="/categories">All</a></li>
-          
-          <li><a href="/categories/Intranet/">Intranet</a></li>
-          
-        </ul>
-      </nav>
-    </header>
-    <!-- /header -->
-    <div class="article-body">
-      <div class="panel panel-default b-no">
-    <div class="panel-heading" role="tab">
-        <h4 class="panel-title">
-            <a data-toggle="collapse" href="#collapseIntranet" aria-expanded="true">
-              <i class="icon icon-folder text-active"></i><i class="icon icon-folder-open text"></i>
-              Intranet
-            </a>
-            <small class="text-muted">(Total 4 articles)</small>
-        </h4>
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-0x06-Windows-认证" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      0x06 Windows 认证
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/01/03/0x06-Windows-%E8%AE%A4%E8%AF%81/" class="article-date">
+	  <time datetime="2021-01-03T12:05:00.000Z" itemprop="datePublished">2021-01-03</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/01/03/0x06-Windows-%E8%AE%A4%E8%AF%81/#comments" class="article-comment-link">Comments</a></span>
+        
+      </div>
     </div>
-    <div id="collapseIntranet" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingIntranet">
-        <div class="panel-body">
-            <div class="collection">
-              
-                
-<a href="/2020/09/01/0x04-Winrm%E5%88%A9%E7%94%A8/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2020-09-01T00:57:00.000Z" itemprop="datePublished">2020-09-01</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> 0x04 Winrm利用
-</a>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <blockquote>
+<p> Windows分为本地认证和网络认证</p>
+</blockquote>
+<h4 id="本地认证"><a href="#本地认证" class="headerlink" title="本地认证"></a>本地认证</h4><p>本地认证由Lsass.exe 提供认证，用户从winlogon.exe进程输入密码，密码提交给lsass.exe用于认证(保留明文，如果打了2871997补丁后默认不保存，需要修改注册表重新登录，并将明文密码通过LM和NTLM生成算法处理后得到用户Hash与SAM数据库中保存密码进行对比)</p>
+<p><img src="/images/windows_auth/local.png" alt="local"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%SystemRoot%\system32\config\sam  本地数据库文件</span><br></pre></td></tr></table></figure>
 
+<p>其中LM hash为DES加密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">密码转换为大写，处理密码为16进制字符串，不足14字节的末尾添0补齐</span><br><span class="line">分为7字节一组，每组再以7bit分隔 每组末尾添0 补齐8bit</span><br><span class="line">使用key  KGS!@#$% DES加密</span><br><span class="line">将结果拼接</span><br></pre></td></tr></table></figure>
 
-              
-                
-<a href="/2020/08/31/0x07-Runas-Tip/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2020-08-31T01:39:00.000Z" itemprop="datePublished">2020-08-31</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> 0x03 Session 切换
-</a>
+<p>(03之后默认不使用，密码最大长度为14位，超过14位后不使用,由于加密前有转换操作，大小写不敏感，密码长度小于7字节，后面添0补齐的7字节加密结果固定，可以判断密码长度,高版本为AAD3B435B51404EEAAD3B435B51404EE 表示空)</p>
+<p>NTLM hash为MD4加密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">密码转换为16进制格式，进行Unicode编码</span><br><span class="line">编码厚的内容使用MD4计算得到Hash</span><br></pre></td></tr></table></figure>
 
+<h4 id="网络认证"><a href="#网络认证" class="headerlink" title="网络认证"></a>网络认证</h4><blockquote>
+<p>网络认证分为NTLM和Kerberos协议的认证</p>
+</blockquote>
+<p>NTLM认证采取质询响应的方式，由客户端发送协商请求，指定自身允许的方法，被访问服务器对协商进行筛选并生成Challenge返回给客户端，客户端按照被请求服务器的功能列表要求，以NTLM hash作为密钥对Challenge以协商的算法加密生成Net-hash,将Net-hash，访问用户以及Challenge发送给被访问服务器，被访问服务器读取对应访问用户的NTLM hash 同样对Challenge进行加密比对。 有效防止了通信信道上的监听问题。</p>
+<p><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/b34032e5-3aae-4bc6-84c3-c6d80eadf7f2" target="_blank" rel="noopener">Negotiate Link Docs</a></p>
+<p><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/801a4681-8809-4be9-ab0d-61dcfe762786" target="_blank" rel="noopener">Challenge Link Docs</a></p>
+<p><a href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-nlmp/033d32cc-88f9-4483-9bf2-b273055038ce" target="_blank" rel="noopener">Authenticate Link Docs</a></p>
+<p><img src="/images/windows_auth/challenge.png" alt="image-20210103140320827"></p>
+<p>如果请求用户的Hash不在本地,则服务器会通过NetLogon 与域控建立安全通道，发送所有认证涉及的流量包，由域控对客户端Challenge进行加密比较 (Pass Through Authentication认证流程)</p>
+<p><img src="/images/windows_auth/challengewithdc.png" alt="img"></p>
+<p>其中认证响应有6种类型 LmCompatibilityLevel(本地组策略)设置决定</p>
+<p><img src="/images/windows_auth/LmCompatibilityLevel.png" alt="image-20210103152806557"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Windows 2000 以及 Windows XP: 发送 LM &amp; NTLM 响应</span><br><span class="line">Windows Server 2003: 仅发送 NTLM 响应</span><br><span class="line">Windows Vista、Windows Server 2008、Windows 7 以及 Windows Server 2008 R2及以上: 仅发送 NTLMv2 响应</span><br></pre></td></tr></table></figure>
 
-              
-                
-<a href="/2020/08/28/0x01-%E8%BF%9F%E5%88%B0%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2020-08-28T14:24:00.000Z" itemprop="datePublished">2020-08-28</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> 0x01 文件时间修改
-</a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">LM</span><br><span class="line">LM V2  NTLM版本系统上的LM响应</span><br><span class="line">NTLM v1    windows xp和2000   5.1</span><br><span class="line">NTLM V2   </span><br><span class="line">NTLM2 会话响应   无ntlm2时响应ntlm2协商  </span><br><span class="line">匿名响应   无实际身份认证</span><br><span class="line"></span><br><span class="line">NTLM v1 和NTLM v2差异</span><br><span class="line">Challenge  V1为8字节   v2为16字节</span><br><span class="line"></span><br><span class="line">V1</span><br><span class="line">将16字节的NTLM Hash 填充为21字节并分为3组 作为密钥使用3des算法加密Challenge </span><br><span class="line">V2</span><br><span class="line">将用户名大写后与请求目标Unicode编码后拼接在一起，使用NTLM hash作为密钥加密得到值</span><br><span class="line">利用加密值构建Blob信息，使用NTLM Hash作为密钥，HMAC-MD5消息代码认证加密(服务端返回Challenge和Blob) 得到16字节的NTProofStr(等于签名)</span><br><span class="line">拼接NTSproofStr和Blob得到Response</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">格式</span><br><span class="line">net-ntlm v1 hash </span><br><span class="line">username::hostname:LM response:NTLM response:challenge</span><br><span class="line">net-ntlm v2 hash</span><br><span class="line">username::domain:challenge:HMAC-MD5:blob</span><br></pre></td></tr></table></figure>
 
-              
-                
-<a href="/2020/08/03/0x00/" class="collection-item" target="_blank" itemprop="url">
-  <time datetime="2020-08-03T14:32:00.000Z" itemprop="datePublished">2020-08-03</time>
-  <span>&nbsp;&nbsp;&nbsp;</span> 0x00 Linux 痕迹清理
-</a>
-
-
-              
-            </div>
-        </div>
+<h4 id="Kerberos域认证"><a href="#Kerberos域认证" class="headerlink" title="Kerberos域认证"></a>Kerberos域认证</h4>
+      
     </div>
-</div>
+    <div class="article-footer">
+      
+
     </div>
   </article>
-   
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/01/02/0x05-New-Begin/" title="0x05 New Begin"><span>Older&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -438,6 +486,12 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+   
+
+
+
+
+   
 
 
 
