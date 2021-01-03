@@ -5,9 +5,9 @@
   <subtitle>Select * from world where someone like u </subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://breezya.github.io/"/>
   <updated>2021-01-02T11:35:20.337Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://breezya.github.io/</id>
   
   <author>
     <name>Breezy</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>0x05 New Begin</title>
-    <link href="http://yoursite.com/2021/01/02/0x05-New-Begin/"/>
-    <id>http://yoursite.com/2021/01/02/0x05-New-Begin/</id>
+    <link href="https://breezya.github.io/2021/01/02/0x05-New-Begin/"/>
+    <id>https://breezya.github.io/2021/01/02/0x05-New-Begin/</id>
     <published>2021-01-02T11:29:38.000Z</published>
     <updated>2021-01-02T11:35:20.337Z</updated>
     
@@ -43,10 +43,10 @@
   
   <entry>
     <title>0x04 Winrm利用</title>
-    <link href="http://yoursite.com/2020/09/01/0x04-Winrm%E5%88%A9%E7%94%A8/"/>
-    <id>http://yoursite.com/2020/09/01/0x04-Winrm%E5%88%A9%E7%94%A8/</id>
-    <published>2020-09-01T00:57:09.000Z</published>
-    <updated>2020-09-07T23:53:20.770Z</updated>
+    <link href="https://breezya.github.io/2020/09/01/0x04-Winrm%E5%88%A9%E7%94%A8/"/>
+    <id>https://breezya.github.io/2020/09/01/0x04-Winrm%E5%88%A9%E7%94%A8/</id>
+    <published>2020-09-01T00:57:00.000Z</published>
+    <updated>2021-01-03T11:00:41.115Z</updated>
     
     <content type="html"><![CDATA[<p>WinRM(Windows Remote Management)远程管理，是一种允许管理员远程执行系统管理任务的服务。基于Powershell,通过HTTP（5985）或HTTPS SOAP（5986）执行通信，默认情况下支持Kerberos和NTLM身份验证以及基本身份验证。</p><blockquote><p>使用此服务需要管理员级别凭据<br>双方都需要开启winrm(Win7开始支持，Server12后默认开启)</p></blockquote><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">--开启--</span><br><span class="line">winrm quickconfig -q   启动服务并设置为自启动 添加防火墙例外规则 添加监听配置</span><br><span class="line">或</span><br><span class="line">Powershell下  Enable-PSRemoting -Force</span><br><span class="line"></span><br><span class="line">--配置--</span><br><span class="line">winrm get winrm&#x2F;config 获取配置信息</span><br><span class="line">winrm set winrm&#x2F;config&#x2F;Client @&#123;TrustedHosts&#x3D;&quot;*&quot;&#125; 配置信任管理源</span><br><span class="line">winrm set winrm&#x2F;config&#x2F;Client @&#123;TrustedHosts&#x3D;&quot;&quot;&#125;  删除信任</span><br><span class="line">winrm e winrm&#x2F;config&#x2F;listener  查看监听设置</span><br><span class="line"></span><br><span class="line">winrm set winrm&#x2F;config&#x2F;service @&#123;EnableCompatibilityHttpListener&#x3D;&quot;true&quot;&#125;   启用80端口复用</span><br><span class="line">winrm set winrm&#x2F;config&#x2F;service @&#123;EnableCompatibilityHttpListener&#x3D;&quot;false&quot;&#125;  关闭</span><br><span class="line">winrm set winrm&#x2F;config&#x2F;Listener?Address&#x3D;*+Transport&#x3D;HTTP @&#123;Port&#x3D;&quot;80&quot;&#125;  修改默认监听端口为80</span><br></pre></td></tr></table></figure><p>开启端口复用主要利用IIS自带驱动<code>http.sys</code>的端口共享功能Port Sharing。所有基于HTTP.sys驱动的HTTP应用可以共享同一个端口，只需要各自注册的url前缀不一样即可</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh http show  servicestate  查看注册的url前缀</span><br></pre></td></tr></table></figure><h3 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h3><ul><li><p>Winrs</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">winrs -r:http:&#x2F;&#x2F;192.168.1.152:5985 -u:administrator -p:admin123 &quot;whoami &#x2F;all&quot; # 执行单条命令</span><br><span class="line">winrs -r:http:&#x2F;&#x2F;192.168.1.152:5985 -u:administrator -p:admin123 cmd # 返回交互式cmd</span><br></pre></td></tr></table></figure></li><li><p>Powershell</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ip&#x3D;&quot;192.168.1.116&quot;</span><br><span class="line">#$ip&#x3D;&quot;192.168.1.20&quot;</span><br><span class="line">Set-Item WSMan:\localhost\Client\TrustedHosts -Value $ip -Force</span><br><span class="line">$securePassword &#x3D; ConvertTo-SecureString -AsPlainText -Force &#39;pass&#39;</span><br><span class="line">$cred &#x3D; New-Object System.Management.Automation.PSCredential &#39;pass&#39;, $securePassword</span><br><span class="line">$cmd &#x3D; &#123;ls C:\users\public&#125;</span><br><span class="line">Invoke-Command -ComputerName $ip -Credential $cred -ScriptBlock $cmd</span><br><span class="line"></span><br><span class="line">Enter-PSSession -ComputerName 192.168.100.155 -Credential administrator 返回交互式shell</span><br></pre></td></tr></table></figure></li><li><p>Winrm </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">winrm -hostname remote.domain.com -username &quot;Administrator&quot; -password &quot;secret&quot; &quot;ipconfig &#x2F;all&quot;</span><br><span class="line">winrm invoke create wmicimv2&#x2F;win32_process @&#123;commandline&#x3D;&quot;\\192.168.12.20\c\test.exe&quot;&#125;</span><br></pre></td></tr></table></figure></li><li><p>HTTP Server API</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">netsh http add urlacl url&#x3D;http:&#x2F;&#x2F;+:80&#x2F;MyUri user&#x3D;everyone  添加urlacl 管理员权限</span><br><span class="line">除此之外可以利用已存在的urlacl</span><br><span class="line">netsh http show urlacl </span><br><span class="line">http:&#x2F;&#x2F;+:80&#x2F;Temporary_Listen_Addresses&#x2F;  默认存在</span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;3gstudent&#x2F;Homework-of-C-Language&#x2F;blob&#x2F;master&#x2F;HTTPServerWebshell.cpp</span><br><span class="line">test.exe http:&#x2F;&#x2F;xx:80&#x2F;url</span><br></pre></td></tr></table></figure></li></ul><h3 id="BypassUAC"><a href="#BypassUAC" class="headerlink" title="BypassUAC"></a>BypassUAC</h3><p>通过修改注册表使得除了<code>administrator</code>之外的本地管理用户能够直接绕过UAC通过Winrm进行高权限管理</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System &#x2F;v LocalAccountTokenFilterPolicy &#x2F;t REG_DWORD &#x2F;d 1 &#x2F;f</span><br></pre></td></tr></table></figure>]]></content>
     
@@ -60,13 +60,17 @@
     </summary>
     
     
+      <category term="Intranet" scheme="https://breezya.github.io/categories/Intranet/"/>
+    
+    
+      <category term="Winrm" scheme="https://breezya.github.io/tags/Winrm/"/>
     
   </entry>
   
   <entry>
     <title>0x03 Session 切换</title>
-    <link href="http://yoursite.com/2020/08/31/Runas-Tip/"/>
-    <id>http://yoursite.com/2020/08/31/Runas-Tip/</id>
+    <link href="https://breezya.github.io/2020/08/31/Runas-Tip/"/>
+    <id>https://breezya.github.io/2020/08/31/Runas-Tip/</id>
     <published>2020-08-31T01:39:00.000Z</published>
     <updated>2020-09-06T11:04:08.133Z</updated>
     
@@ -90,8 +94,8 @@
   
   <entry>
     <title>0x02 比赛分享</title>
-    <link href="http://yoursite.com/2020/08/31/0x02-%E6%AF%94%E8%B5%9B%E5%88%86%E4%BA%AB/"/>
-    <id>http://yoursite.com/2020/08/31/0x02-%E6%AF%94%E8%B5%9B%E5%88%86%E4%BA%AB/</id>
+    <link href="https://breezya.github.io/2020/08/31/0x02-%E6%AF%94%E8%B5%9B%E5%88%86%E4%BA%AB/"/>
+    <id>https://breezya.github.io/2020/08/31/0x02-%E6%AF%94%E8%B5%9B%E5%88%86%E4%BA%AB/</id>
     <published>2020-08-31T01:15:46.000Z</published>
     <updated>2021-01-02T11:28:43.704Z</updated>
     
@@ -112,8 +116,8 @@
   
   <entry>
     <title>0x01 迟到的第二篇文</title>
-    <link href="http://yoursite.com/2020/08/28/0x01-%E8%BF%9F%E5%88%B0%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87/"/>
-    <id>http://yoursite.com/2020/08/28/0x01-%E8%BF%9F%E5%88%B0%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87/</id>
+    <link href="https://breezya.github.io/2020/08/28/0x01-%E8%BF%9F%E5%88%B0%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87/"/>
+    <id>https://breezya.github.io/2020/08/28/0x01-%E8%BF%9F%E5%88%B0%E7%9A%84%E7%AC%AC%E4%BA%8C%E7%AF%87%E6%96%87/</id>
     <published>2020-08-28T14:24:15.000Z</published>
     <updated>2021-01-02T11:28:33.239Z</updated>
     
@@ -135,8 +139,8 @@
   
   <entry>
     <title>0x00 Linux 痕迹清理</title>
-    <link href="http://yoursite.com/2020/08/03/0x00/"/>
-    <id>http://yoursite.com/2020/08/03/0x00/</id>
+    <link href="https://breezya.github.io/2020/08/03/0x00/"/>
+    <id>https://breezya.github.io/2020/08/03/0x00/</id>
     <published>2020-08-03T14:32:57.000Z</published>
     <updated>2020-08-04T01:14:52.560Z</updated>
     
